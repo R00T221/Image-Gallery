@@ -1,0 +1,100 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+#wrapper{
+height: 100vh;
+overflow-x: hidden;
+overflow-y: auto;
+}
+.container{
+    height: 100%;
+    /* max width has to be 1200 px becox if content is lesser,it will fix accordingly */
+    max-width: 1200px;
+    /* since the container which contains images is placed at center of wrapper,it is done using margin:auto.Two values of margin means top and bottom margin is 0 and left and right margin is auto */
+    margin: 0 auto;
+    padding: 20px;
+}
+.container h1{
+    margin: 20px 0;
+    font-size: 3rem;
+    text-align: center;
+}
+.gallery{
+    /* making it to display flex so that we can position it's items(images) */
+    display: flex;
+    /* since  default axis is horizontol and all the images will be positioned horizontolly but after the fixeed width of container we want the next items to come in next row,so using flex-wrap property */
+    flex-wrap: wrap;
+    justify-content: space-between;
+    /* width: 100%;
+    height: 100%; */
+}
+.card{
+    /* since width of gallery is 100% so we will divide 100% of width for every 3 cards,giving each card width of 33% but as we have given space between the cards(which are flex-items),means swe need some space for that as well,so giving eachcard width of 32% only.In this 32% of width,we have to later fit the image as well.
+    Note that it is the width of card and not of the image */
+    /* ------NOTE---------
+    We should not set the height of the card if:
+    If the width/height of parent container which is a flex box is not set and if the width of flex item is set,height is adjusted accroding to that width,the explicit height will not work.It only works if the parent flex box has been given some dimensions explicitly */
+    width: 32%;
+    /* height: 80%; */
+/* position of card has to be relative so that position of figcaption can be absolute becox figcaption overlaps the image. */
+position: relative;
+margin-bottom: 20px;
+/* when image will be contained within the card and does not overflow the card,border-radius will be visible */
+border-radius: 10px;
+/* setting overflow to hidden so that image placed wihin card does not overflow */
+overflow: hidden;
+}
+.card img{
+    /* setting width and height of image exactly 100% so that it fits exactly in it's parent(card).Thus it means if we have to make border radius of parent container visible,we have to fit the item in it using both width and height of 100% */
+    width: 100%;
+    height: 100%;
+    /* NOTE THAT AS SOON AS WE SET HEIGHT TO 100%,FIGCAPTION DISAPPEARS BECOX IT OVERFLOWS THE CARD AND SINCE OVERFLOW IS SET TO HIDDEN,IT IS NOT VISIBLE */
+    /* SINCE BY DEFAULT IMAGES ARE IN GRAYSCALE UNLESS HOVERED UPON,SO USING FILTER PROPERTY TO SET ALL IMAGES IN GREYSCALE */
+    filter: grayscale(100%);
+    object-fit: cover;
+    /* without hovering there is aslight shadow of the images,giving box shadow bwith no value for horizontol shadow or vertical shadow but blur value only */
+    box-shadow: 0 0 20px #333;
+}
+/* styling card on hover */
+.card:hover{
+    /* using transform to scale */
+    transform: scale(1.03);
+    /* since shadow also returns on hover so using filter to implement drop shadow which is an effect.We can also use box shadow but we may have to write spread radius and blur value aas well.
+    Drop shadow can have 4 values,ist value is horizontol shadow,2nd is vertical shadow,3rd is blur value and 4th is color*/
+    filter: drop-shadow(0 0 10px #333);
+    /* w can set the transition time within which these effects take place.Below we set the transition time of 0.5 seconds */
+    transition: 0.5s;
+}
+/* STYLING IMG ON HOVER.It means when card is hovered,do following changes to img and '.card img:hover' means when img is hovered, do following changes */
+.card:hover img{
+    /* since we want the greyscale effect to be gone on hover so */
+    filter: grayscale(0%);
+}
+/* styling figcaption */
+.card figcaption{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 25px;
+    /* takes entire width of parent div 'card' and 20% of it's height */
+    width: 100%;
+    height: 20%;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    /* SINCE WE DONT WANT FIGCAPTION TO BE DISPLAYED UNLESS CARD IS NOT HOVERED,SO SETTING IT'S OPACITY TO 0 SO THAT IT STAYS INVISIBLE */
+    opacity: 0;
+    /* setting border radius with 4 values.Ist value specifies top-left border radius,2nd value is top right,3rd value is bottom right and 4th value is bottom-left */
+    border-radius: 0 0 10px 10px;
+    /* applying linear gradient.Since default direxn is top to bottom but angle is 0 deg thus making it bottom to top with starting color rgba(0,0,0,0.5),0% indicates that this color starts at the 0% of gradient length(starts at bottom) and the ending color is rgba(255,255,255,0) which turns to this color at 100% of the gradient length(at end/top) */
+    background: linear-gradient(0deg,rgba(0,0,0,0.5) 0%,rgba(255,255,255,0) 100%);
+    transition: 0.5s;
+}
+/* figcaption on hover.As we write parent container ist i:e .card:hover which means when card is hovered,do following changes to figcaption */
+.card:hover figcaption{
+    /* setting opacity to 1 so that card becomes visible on hover */
+opacity: 1;
+transform: scale(1.03);
+}
